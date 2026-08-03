@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MarketFlow — Two-Sided Marketplace Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="ambient a1"></div><div class="ambient a2"></div>
+  <header class="topbar">
+    <button class="brand" data-view="home"><span class="brand-mark">M</span><span>MarketFlow</span></button>
+    <nav class="desktop-nav">
+      <button data-view="marketplace">Marketplace</button>
+      <button data-view="how">How it works</button>
+      <button data-view="pricing">Pricing</button>
+    </nav>
+    <div class="top-actions">
+      <button id="themeToggle" class="icon-btn" aria-label="Toggle theme">☾</button>
+      <button class="ghost" data-action="login">Log in</button>
+      <button class="primary" data-view="dashboard">Open demo</button>
+    </div>
+  </header>
+
+  <main id="app"></main>
+
+  <div class="contact-dock">
+    <a href="https://wa.me/15551234567?text=Hi%20MarketFlow%2C%20I%20need%20help" target="_blank" class="dock-btn whatsapp" title="WhatsApp">◉</a>
+    <a href="mailto:hello@marketflow.demo?subject=Marketplace%20Inquiry" class="dock-btn email" title="Email">✉</a>
+  </div>
+
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <button class="modal-close" data-action="close-modal">×</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <template id="homeTpl">
+    <section class="hero shell">
+      <div class="hero-copy">
+        <span class="eyebrow">TWO-SIDED MARKETPLACE PLATFORM</span>
+        <h1>Connect customers with trusted professionals — instantly.</h1>
+        <p>One flexible platform for requests, offers, bookings, payments, WhatsApp and email communication.</p>
+        <div class="hero-actions">
+          <button class="primary large" data-view="marketplace">Explore marketplace</button>
+          <button class="secondary large" data-view="dashboard">View dashboards</button>
+        </div>
+        <div class="proof-row">
+          <span>✓ Role-based panels</span><span>✓ Modular admin</span><span>✓ WhatsApp + Email</span>
+        </div>
+      </div>
+      <div class="hero-visual card-3d">
+        <div class="mini-window">
+          <div class="mini-top"><span></span><span></span><span></span></div>
+          <div class="mini-grid">
+            <aside><b>Dashboard</b><small>Requests</small><small>Messages</small><small>Bookings</small></aside>
+            <div class="mini-main">
+              <div class="metric-row"><div><small>Open requests</small><b>12</b></div><div><small>New offers</small><b>7</b></div></div>
+              <div class="mini-card"><span class="avatar">JW</span><div><b>Kitchen renovation</b><small>3 providers responded</small></div><button>View</button></div>
+              <div class="mini-card"><span class="avatar">AM</span><div><b>Business website</b><small>Budget: $1,500</small></div><button>Chat</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="shell trust-strip">
+      <div><b>2,400+</b><span>customers</span></div><div><b>850+</b><span>providers</span></div><div><b>4.9/5</b><span>average rating</span></div><div><b>24/7</b><span>support</span></div>
+    </section>
+
+    <section class="shell section">
+      <div class="section-head"><span class="eyebrow">BUILT FOR BOTH SIDES</span><h2>One marketplace. Three powerful workspaces.</h2></div>
+      <div class="role-grid">
+        <article class="feature-card"><div class="icon">◎</div><h3>Customer panel</h3><p>Post requests, compare offers, chat, book services and manage payments.</p><button class="text-btn" data-role="customer" data-view="dashboard">Open customer demo →</button></article>
+        <article class="feature-card"><div class="icon">◈</div><h3>Provider panel</h3><p>Browse leads, submit offers, manage availability, clients and earnings.</p><button class="text-btn" data-role="provider" data-view="dashboard">Open provider demo →</button></article>
+        <article class="feature-card"><div class="icon">▦</div><h3>Admin workspace</h3><p>Control users, categories, commissions, modules, content and disputes.</p><button class="text-btn" data-role="admin" data-view="dashboard">Open admin demo →</button></article>
+      </div>
+    </section>
+
+    <section class="shell section split-section">
+      <div><span class="eyebrow">FLEXIBLE BY DESIGN</span><h2>Modules can be enabled, replaced or reordered.</h2><p>The admin can switch features on or off without rebuilding the whole website. Perfect for an ongoing marketplace project.</p><button class="secondary" data-role="admin" data-view="dashboard">See module manager</button></div>
+      <div class="module-stack">
+        <div draggable="true"><span>☰</span> Booking module <b>ON</b></div>
+        <div draggable="true"><span>☰</span> WhatsApp integration <b>ON</b></div>
+        <div draggable="true"><span>☰</span> Email notifications <b>ON</b></div>
+        <div draggable="true"><span>☰</span> Payment module <b>OPTIONAL</b></div>
+      </div>
+    </section>
+  </template>
+
+  <template id="marketplaceTpl">
+    <section class="page-hero shell"><span class="eyebrow">MARKETPLACE</span><h1>Find the right professional for any job.</h1><div class="searchbar"><input id="marketSearch" placeholder="Search services, e.g. web design"/><button class="primary" data-action="search-market">Search</button></div></section>
+    <section class="shell market-layout">
+      <aside class="filters panel">
+        <h3>Filters</h3>
+        <label>Category<select id="categoryFilter"><option>All categories</option><option>Web Development</option><option>Home Services</option><option>Marketing</option><option>Design</option></select></label>
+        <label>Budget<select><option>Any budget</option><option>Under $500</option><option>$500–$2,000</option><option>$2,000+</option></select></label>
+        <label class="check"><input type="checkbox"/> Verified providers only</label>
+        <button class="secondary full" data-action="clear-filters">Clear filters</button>
+      </aside>
+      <div>
+        <div class="market-head"><h2>Featured professionals</h2><span id="resultCount">6 results</span></div>
+        <div id="providerGrid" class="provider-grid"></div>
+      </div>
+    </section>
+  </template>
+
+  <template id="dashboardTpl">
+    <section class="dashboard-shell">
+      <aside class="sidebar">
+        <button class="brand side-brand" data-view="home"><span class="brand-mark">M</span><span>MarketFlow</span></button>
+        <div class="role-switch">
+          <button data-switch-role="customer">Customer</button><button data-switch-role="provider">Provider</button><button data-switch-role="admin">Admin</button>
+        </div>
+        <nav id="sideNav"></nav>
+        <div class="side-support"><small>Need help?</small><b>Talk to support</b><div><a href="https://wa.me/15551234567" target="_blank">WhatsApp</a><a href="mailto:support@marketflow.demo">Email</a></div></div>
+      </aside>
+      <section class="dashboard-main">
+        <div class="dash-top"><div><small id="roleLabel"></small><h1 id="dashTitle"></h1></div><div class="dash-actions"><button class="icon-btn">🔔</button><button class="avatar-btn">EL</button></div></div>
+        <div id="dashContent"></div>
+      </section>
+    </section>
+  </template>
+
+  <template id="howTpl"><section class="page-hero shell"><span class="eyebrow">HOW IT WORKS</span><h1>A simple workflow for customers and providers.</h1></section><section class="shell steps"><article><span>01</span><h3>Post a request</h3><p>Customers describe what they need, their budget and preferred timing.</p></article><article><span>02</span><h3>Receive offers</h3><p>Qualified providers respond with price, timeline and a personal message.</p></article><article><span>03</span><h3>Chat and book</h3><p>Users communicate through the platform, WhatsApp or email and confirm the job.</p></article><article><span>04</span><h3>Complete and review</h3><p>Both sides manage delivery, payment and reviews from their own dashboard.</p></article></section></template>
+
+  <template id="pricingTpl"><section class="page-hero shell"><span class="eyebrow">PRICING</span><h1>Flexible marketplace monetization.</h1></section><section class="shell pricing-grid"><article><h3>Starter</h3><h2>$0</h2><p>For testing the marketplace</p><ul><li>Basic profiles</li><li>Manual bookings</li><li>Email notifications</li></ul><button class="secondary full">Start free</button></article><article class="featured"><span class="pill">Most popular</span><h3>Growth</h3><h2>10%</h2><p>Commission per completed booking</p><ul><li>All user panels</li><li>WhatsApp integration</li><li>Admin modules</li><li>Analytics</li></ul><button class="primary full">Choose Growth</button></article><article><h3>Enterprise</h3><h2>Custom</h2><p>For larger marketplace businesses</p><ul><li>Custom modules</li><li>White label</li><li>Priority support</li></ul><button class="secondary full">Contact sales</button></article></section></template>
+
+  <script src="app.js"></script>
+</body>
+</html>
